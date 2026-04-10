@@ -1,4 +1,4 @@
-import { Menu, Moon, ShieldAlert, Sun, Wallet, X } from 'lucide-react';
+import { Menu, Moon, ShieldAlert, Sun, Users, Wallet, X } from 'lucide-react';
 import { ReactNode, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -63,19 +63,35 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
               </NavLink>
             ))}
             {user?.role === 'admin' ? (
-              <NavLink
-                to="/admin"
-                className={({ isActive }) =>
-                  `flex items-center gap-2 rounded-lg px-3 py-2 text-sm ${
-                    isActive
-                      ? 'bg-danger/15 text-danger'
-                      : 'text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800'
-                  }`
-                }
-              >
-                <ShieldAlert className="h-4 w-4" />
-                Admin
-              </NavLink>
+              <>
+                <NavLink
+                  to="/admin"
+                  end
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 rounded-lg px-3 py-2 text-sm ${
+                      isActive
+                        ? 'bg-danger/15 text-danger'
+                        : 'text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800'
+                    }`
+                  }
+                >
+                  <ShieldAlert className="h-4 w-4" />
+                  Admin
+                </NavLink>
+                <NavLink
+                  to="/admin/users"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 rounded-lg px-3 py-2 text-sm ${
+                      isActive
+                        ? 'bg-danger/15 text-danger'
+                        : 'text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800'
+                    }`
+                  }
+                >
+                  <Users className="h-4 w-4" />
+                  Manage Users
+                </NavLink>
+              </>
             ) : null}
           </nav>
 

@@ -7,6 +7,7 @@ import { ToastContainer } from './components/shared/ToastContainer';
 import { useSocket } from './hooks/useSocket';
 import { useAuth } from './context/AuthContext';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
+import { AdminUsersPage } from './pages/AdminUsersPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { DisputePage } from './pages/DisputePage';
 import { FraudReportPage } from './pages/FraudReportPage';
@@ -95,6 +96,16 @@ function App() {
             <AdminRoute>
               <ProtectedShell>
                 <AdminDashboardPage />
+              </ProtectedShell>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <AdminRoute>
+              <ProtectedShell>
+                <AdminUsersPage />
               </ProtectedShell>
             </AdminRoute>
           }

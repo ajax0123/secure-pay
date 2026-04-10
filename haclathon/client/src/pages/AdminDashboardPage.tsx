@@ -2,10 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   getAdminDisputesApi,
   getCaseTimelineAdminApi,
-  freezeAccountAdminApi,
   getFraudReportsAdminApi,
-  getUsersAdminApi,
-  unfreezeAccountAdminApi
+  getUsersAdminApi
 } from '../api/adminApi';
 import { CaseTimelineViewer } from '../components/admin/CaseTimelineViewer';
 import { DisputeCasesTable } from '../components/admin/DisputeCasesTable';
@@ -14,7 +12,6 @@ import { FraudReportsTable } from '../components/admin/FraudReportsTable';
 import { FraudStatsCards } from '../components/admin/FraudStatsCards';
 import { FraudTrendChart, TrendPoint } from '../components/admin/FraudTrendChart';
 import { RiskBucket, RiskHeatmapChart } from '../components/admin/RiskHeatmapChart';
-import { UserManagementTable } from '../components/admin/UserManagementTable';
 import { EmptyState } from '../components/shared/EmptyState';
 import { AuditTimelineEntry, DisputeCase, FraudReport } from '../types/fraud';
 import { User } from '../types/user';
@@ -97,16 +94,6 @@ export const AdminDashboardPage = () => {
   const trendData = useMemo(() => makeTrend(reports), [reports]);
   const heatmapData = useMemo(() => makeHeatmap(reports), [reports]);
 
-  const freeze = async (userId: string) => {
-    await freezeAccountAdminApi(userId, 'Admin manual action');
-    await fetchData();
-  };
-
-  const unfreeze = async (userId: string) => {
-    await unfreezeAccountAdminApi(userId);
-    await fetchData();
-  };
-
   if (loading) {
     return <div className="text-sm text-slate-300">Loading admin analytics...</div>;
   }
@@ -139,8 +126,6 @@ export const AdminDashboardPage = () => {
         <FraudTrendChart data={trendData} />
         <RiskHeatmapChart data={heatmapData} />
       </div>
-
-      <UserManagementTable users={users} onFreeze={freeze} onUnfreeze={unfreeze} />
 
       <CaseTimelineViewer selected={selected} timeline={timeline} />
     </div>
