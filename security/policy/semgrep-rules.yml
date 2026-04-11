@@ -1,0 +1,38 @@
+rules:
+  - id: no-fallback-jwt-secret
+    message: Do not use insecure fallback JWT secrets.
+    severity: ERROR
+    languages: [javascript, typescript]
+    patterns:
+      - pattern-regex: "JWT_SECRET\\s*=\\s*process\\.env\\.JWT_SECRET\\s*\\|\\|"
+
+  - id: no-wildcard-cors
+    message: CORS must use an explicit allowlist.
+    severity: ERROR
+    languages: [javascript, typescript]
+    patterns:
+      - pattern-regex: "app\\.use\\(cors\\(\\s*\\)\\)"
+
+  - id: enforce-aead-encryption
+    message: Use authenticated encryption mode AES-256-GCM for sensitive data.
+    severity: WARNING
+    languages: [javascript, typescript]
+    patterns:
+      - pattern-regex: "createCipheriv\\(['\"]aes-256-cbc['\"]"
+
+  - id: no-hardcoded-fallback-crypto-keys
+    message: Avoid default fallback cryptographic keys in source code.
+    severity: ERROR
+    languages: [javascript, typescript]
+    patterns:
+      - pattern-regex: "default_hmac_secret|default_key_must_be_32_characters_"
+
+  - id: login-route-should-have-rate-limiter
+    message: Login routes should include explicit rate-limiter middleware.
+    severity: WARNING
+    languages: [javascript]
+    paths:
+      include:
+        - haclathon/server/routes/auth.js
+    patterns:
+      - pattern-regex: "router\\.post\\('/login',\\s*validateRequest"
